@@ -65,7 +65,7 @@ function ScanScreen({ onChangeScreen }) {
     Alert.alert("Permission ok");
     return (
       <BarCodeScanner
-        style={[styles.container1]}
+        style={[styles.container]}
         onBarCodeScanned={({ type, data }) => {
             Alert.alert("ScanData ok" + data);
             sendDataBack(data);
@@ -106,5 +106,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFF00",
+    // padding: 100,
   },
 });

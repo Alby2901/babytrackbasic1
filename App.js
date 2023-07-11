@@ -6,29 +6,35 @@ import { ImageBackground } from "react-native";
 
 export default function App() {
   const [scanning, setScanning] = useState(false);
-  const [scanData, setScanData] = useState('12345');
-  const [scanReq, setScanReq] = useState('12345');
-  
+  const [scanData, setScanData] = useState("12345");
+  const [scanReq, setScanReq] = useState("12345");
+
   function changeScreen(dataBack) {
-    console.log('Dato ric Gen => ' + dataBack)
-    
+    console.log("Dato ric Gen => " + dataBack);
+
     if (scanning) {
-      console.log('Dato ric dalla scan => ' + dataBack)
+      console.log("Dato ric dalla scan => " + dataBack);
       setScanData(dataBack);
       setScanning(false);
     } else {
-      console.log('Dato ric dalla rich => ' + dataBack)
+      console.log("Dato ric dalla rich => " + dataBack);
       setScanReq(dataBack);
       setScanning(true);
     }
   }
 
-  function scanDataRst(){
-    setScanData('56789')
+  function scanDataRst() {
+    setScanData("56789");
   }
 
   let screen = (
-    <MainScreen style={styles.screen} onChangeScreen={changeScreen} scanReqester={scanReq} scanDataSent={scanData} scanDataReset={scanDataRst} />
+    <MainScreen
+      style={styles.screen}
+      onChangeScreen={changeScreen}
+      scanReqester={scanReq}
+      scanDataSent={scanData}
+      scanDataReset={scanDataRst}
+    />
   );
 
   if (scanning) {
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: "center",
-    alignItems: 'stretch',
+    alignItems: "stretch",
   },
   // vista1: {
   //   backgroundColor: "#00ff00",
@@ -97,7 +103,7 @@ const styles = StyleSheet.create({
   rootScreen: {
     flex: 1,
     justifyContent: "center",
-    alignItems: 'stretch',
+    alignItems: "stretch",
   },
   backgroundImage: {
     opacity: 0.15,
