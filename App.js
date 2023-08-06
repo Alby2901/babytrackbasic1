@@ -3,24 +3,98 @@
 // ----------------------------------------------------------------
 
 import * as React from "react";
-import { View, Text, Button, StyleSheet, Pressable } from "react-native";
+import { View, Text, Button, StyleSheet, Pressable, TextInput } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ModalScreen from "./screen/ModalScreen1";
+import { setObjectToStore, getObjectFromStore, clearStore, getAllKeys } from './component/StoreData';
 
 function HomeScreen({ navigation }) {
+  const [dataRed, setDataRed] = React.useState();
+
+  function setToStore() {
+
+    const oggetto = {name: "John", age: 30, city: "New York"}
+    
+    console.log('Obj: ', oggetto);
+
+    // const stringaOggetto = JSON.stringify(oggetto);
+
+    // console.log('strObj: ', stringaOggetto);
+
+    setObjectToStore(oggetto);
+
+  }
+
+  function getKeys() {
+
+    getAllKeys();
+
+  }
+
+  function clearAllStore() {
+
+    clearStore();
+    setDataRed(null);
+
+  }
+
+
+  async function getfromstore() {
+    console.log('get 01');
+
+    const objGetted = await getObjectFromStore()
+
+    console.log('get obj: ', objGetted);
+
+    // JSON.parse(getObjectFromStore())
+
+    console.log('get 02');
+
+    setDataRed(objGetted);
+
+    console.log('get 03');
+  }
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text style={{ fontSize: 30 }}>This is the home screen!</Text>
-      <Button
-        title="Open Modal"
-        onPress={() => {
-          navigation.navigate("MyModal", {
-            testo: "Questo è il testo",
-            testobottone: "cliccami!",
-          });
-        }}
-      />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: 'space-evenly' }}>
+        <Button
+          title="Open Modal"
+          onPress={() => {
+            navigation.navigate("MyModal", {
+              testo: "Questo è il testo",
+              testobottone: "cliccami!",
+            });
+          }}
+        />
+
+        <Button
+          title="Save to store"
+          onPress={setToStore}
+        />
+
+        <Button
+          title="Chek keys"
+          onPress={getKeys}
+        />
+
+        <Button
+          title="Clear store"
+          onPress={clearAllStore}
+        />
+
+        <Button
+          title="Get from store"
+          onPress={getfromstore}
+        />
+
+
+        {dataRed && <Text>Nome: {dataRed.name}</Text>}
+        {dataRed && <Text>Età: {dataRed.age}</Text>}
+        {dataRed && <Text>Città: {dataRed.city}</Text>}
+      </View>
     </View>
   );
 }
@@ -52,7 +126,7 @@ function App() {
           <RootStack.Screen
             name="MyModal"
             component={ModalScreen}
-            // Options={{ headerShown: false }}
+          // Options={{ headerShown: false }}
           />
         </RootStack.Group>
       </RootStack.Navigator>
@@ -65,6 +139,7 @@ export default App;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
+    margin: 20,
     padding: 10,
     elevation: 2,
   },
